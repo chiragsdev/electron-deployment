@@ -5,5 +5,8 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 contextBridge.exposeInMainWorld("api", {
+  checkUpdate: () => ipcRenderer.send("check-update"),
+  onUpdateStatus: (callback) =>
+    ipcRenderer.on("update-status", (event, data) => callback(data)),
   getVersion: () => ipcRenderer.invoke("get-app-version"),
 });

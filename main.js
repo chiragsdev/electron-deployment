@@ -20,22 +20,18 @@ app.whenReady().then(() => {
 
   // Auto update check
   autoUpdater.checkForUpdatesAndNotify();
+
+  setInterval(
+    () => {
+      autoUpdater.checkForUpdates();
+    },
+    5 * 60 * 1000,
+  );
 });
 
-// Events
-autoUpdater.on("checking-for-update", () => {
-  console.log("Checking for update...");
-});
-
-autoUpdater.on("update-available", () => {
-  dialog.showMessageBox({
-    type: "info",
-    message: "Update available. Downloading...",
-  });
-});
-
-autoUpdater.on("update-not-available", () => {
-  console.log("No updates");
+// Manual trigger from UI
+ipcMain.on("check-update", () => {
+  autoUpdater.checkForUpdates();
 });
 
 autoUpdater.on("update-downloaded", () => {
@@ -49,8 +45,50 @@ autoUpdater.on("update-downloaded", () => {
     });
 });
 
+autoUpdater.on("checking-for-update", () => {
+  mainWindow.webContents.send("update-status", "Checking for updates...");
+});
+
+autoUpdater.on("update-available", () => {
+  mainWindow.webContents.send(
+    "update-status",
+    "Update available. Downloading...",
+  );
+});
+
+autoUpdater.on("update-not-available", () => {
+  mainWindow.webContents.send("update-status", "Application is up to date.");
+});
+
+autoUpdater.on("download-progress", (progress) => {
+  mainWindow.webContents.send(
+    "update-status",
+    `Downloading update: ${Math.round(progress.percent)}%`,
+  );
+});
+
+autoUpdater.on("update-downloaded", () => {
+  dialog
+    .showMessageBox(mainWindow, {
+      type: "info",
+      title: "Update ready",
+      message: "A new version has been downloaded.",
+      detail: "Restart the application to apply the update.",
+      buttons: ["Restart now", "Later"],
+    })
+    .then((result) => {
+      if (result.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+});
+
 autoUpdater.on("error", (err) => {
-  console.log("Update error:", err);
+  console.log(err);
+  mainWindow.webContents.send(
+    "update-status",
+    "Error while checking for updates.",
+  );
 });
 
 ipcMain.handle("get-app-version", () => {

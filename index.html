@@ -4,14 +4,28 @@
     <title>Electron Test App</title>
   </head>
   <body>
-    <h1>🚀 Electron Test App New Update Testing AGAIN</h1>
-    <p>If you see this, app is working.</p>
+    <h1>Electron Test App</h1>
+
     <p id="version"></p>
+    <p id="status"></p>
+
+    <button onclick="checkUpdate()">Check for updates</button>
 
     <script>
+      // Show version
       window.api.getVersion().then((version) => {
         document.getElementById("version").innerText = "Version: " + version;
       });
+
+      // Update status messages
+      window.api.onUpdateStatus((message) => {
+        document.getElementById("status").innerText = message;
+      });
+
+      function checkUpdate() {
+        document.getElementById("status").innerText = "Checking for updates...";
+        window.api.checkUpdate();
+      }
     </script>
   </body>
 </html>
