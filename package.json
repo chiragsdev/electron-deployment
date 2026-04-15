@@ -1,0 +1,38 @@
+{
+  "name": "test-deployment",
+  "version": "1.0.0",
+  "description": "a test electron app deployment",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "release": "electron-builder --publish=always"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/chiragsdev/electron-deployment.git"
+  },
+  "author": "chirag solanki",
+  "license": "ISC",
+  "build": {
+    "appId": "com.test.deployment",
+    "productName": "TestDeploymentApp",
+    "win": {
+      "target": "nsis"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "chiragsdev",
+        "repo": "electron-deployment"
+      }
+    ]
+  },
+  "devDependencies": {
+    "electron": "^41.2.0",
+    "electron-builder": "^26.8.1"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.3"
+  }
+}

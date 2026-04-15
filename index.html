@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Electron Test App</title>
+  </head>
+  <body>
+    <h1>🚀 Electron Test App</h1>
+    <p>If you see this, app is working.</p>
+    <p id="version"></p>
+
+    <script>
+      document.getElementById("version").innerText =
+        "Version: " + require("electron").remote.app.getVersion();
+    </script>
+  </body>
+</html>
