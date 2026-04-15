@@ -30,6 +30,9 @@ jobs:
         run: |
           npm version patch -m "auto release %s"
 
+      - name: Push changes
+        run: git push origin main --follow-tags
+
       - name: Build & Publish
         run: npm run release
         env:
