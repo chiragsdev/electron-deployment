@@ -1,7 +1,6 @@
-const { app, BrowserWindow, dialog } = require("electron");
+const { app, BrowserWindow, dialog, ipcMain } = require("electron");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
-
 let mainWindow;
 
 function createWindow() {
@@ -52,4 +51,8 @@ autoUpdater.on("update-downloaded", () => {
 
 autoUpdater.on("error", (err) => {
   console.log("Update error:", err);
+});
+
+ipcMain.handle("get-app-version", () => {
+  return app.getVersion();
 });
