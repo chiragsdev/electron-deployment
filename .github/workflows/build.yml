@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -27,8 +30,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
 
       - name: Bump version automatically
-        run: |
-          npm version patch -m "auto release %s"
+        run: npm version patch -m "auto release %s"
 
       - name: Push changes
         run: git push origin main --follow-tags
@@ -36,4 +38,4 @@ jobs:
       - name: Build & Publish
         run: npm run release
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
