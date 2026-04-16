@@ -1,6 +1,7 @@
+
 {
   "name": "test-deployment",
-  "version": "1.0.6",
+  "version": "1.0.5",
   "description": "a test electron app deployment",
   "main": "main.js",
   "scripts": {
@@ -15,10 +16,11 @@
   "author": "chirag solanki",
   "license": "ISC",
   "build": {
-    "appId": "com.test.deployment",
-    "productName": "TestDeploymentApp",
+    "appId": "com.zeusint.factory-os",
+    "productName": "FactoryOS",
     "win": {
-      "target": "nsis"
+      "target": ["nsis", "portable"],
+      "icon": "assets/factoryos.ico"
     },
     "publish": [
       {
