@@ -1,6 +1,6 @@
 {
   "name": "test-deployment",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "a test electron app deployment",
   "main": "main.js",
   "scripts": {
