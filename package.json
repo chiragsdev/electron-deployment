@@ -1,7 +1,6 @@
-
 {
   "name": "test-deployment",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "a test electron app deployment",
   "main": "main.js",
   "scripts": {
@@ -19,7 +18,10 @@
     "appId": "com.zeusint.factory-os",
     "productName": "FactoryOS",
     "win": {
-      "target": ["nsis", "portable"],
+      "target": [
+        "nsis",
+        "portable"
+      ],
       "icon": "assets/factoryos.ico"
     },
     "publish": [
